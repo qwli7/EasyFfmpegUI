@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.* ?>
+
+<?import javafx.collections.FXCollections?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="easyffmpeg.ui.MainPane"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <MediaView fx:id="mediaView">
+    </MediaView>
+
+    <VBox spacing="10">
+<!--        <ProgressBar fx:id="progressBar"/>-->
+        <HBox alignment="CENTER" spacing="20">
+            <Button fx:id="selectedFileButton" onAction="#selectedFile">选择文件</Button>
+            <Label fx:id="selectedFilePathLabel" text="选择文件地址"/>
+            <Button fx:id="playButton" text="播放" onAction="#handlePlay"/>
+            <Button fx:id="pauseButton" text="暂停" onAction="#handlePause" prefWidth="60"/>
+            <Button text="停止" onAction="#handleStop" prefWidth="60"/>
+            <Label text="音量:"/>
+            <Slider fx:id="volumeSlider" prefWidth="100" max="1" value="0.8"/>
+            <Label text="速度:"/>
+            <ComboBox fx:id="speedCombo">
+<!--                <items>-->
+<!--                    <FXCollections fx:factory="observableArrayList">-->
+<!--                        <String>0.5x</String>-->
+<!--                        <String>1.0x</String>-->
+<!--                        <String>1.5x</String>-->
+<!--                        <String>2.0x</String>-->
+<!--                    </FXCollections>-->
+<!--                </items>-->
+            </ComboBox>
+        </HBox>
+    </VBox>
+</AnchorPane>
