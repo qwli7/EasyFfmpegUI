@@ -1,24 +1,56 @@
 package easyffmpeg.ui;
 
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
+import java.nio.file.Path;
+import java.util.ResourceBundle;
 
-public class MainPane extends Parent {
 
-    private HBox hBox;
+public class MainPane implements Initializable {
+
+    @FXML
+    public Label selectedFilePathLabel;
+    @FXML
+    public MediaView mediaView;
+    @FXML
+    public ProgressBar progressBar;
+    @FXML
+    public Button playButton;
+    @FXML
+    public Button pauseButton;
+    @FXML
+    public Slider volumeSlider;
+    @FXML
+    public ComboBox<String> speedCombo;
+    @FXML
+    private Button selectedFileButton;
+
+    private Media media;
+    private MediaPlayer mediaPlayer;
 
 
-    public MainPane(Stage primaryStage) {
-        hBox = new HBox(20);
-        Button button = new Button("浏览");
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        media = new Media("file:/D:/DevDocs/music/GpULzuPo_3212732760_shd.mp4");
+//        MediaPlayer mediaPlayer = new MediaPlayer(media);
+//        mediaView.setMediaPlayer(mediaPlayer);
 
-        button.setOnAction(event -> {
-            FileChooser fileChooser = new FileChooser();
+//        volumeSlider.valueProperty().bindBidirectional(mediaPlayer.volumeProperty());
+    }
+
+
+    public void selectedFile(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("选择文件");
             fileChooser.setInitialDirectory(new File(".")); //初始路径
 
@@ -28,11 +60,26 @@ public class MainPane extends Parent {
                     new FileChooser.ExtensionFilter("所有文件", "*.*")
             );
 
-            File file = fileChooser.showOpenDialog(primaryStage);
-            System.out.println(file.toString());
-        });
+            File file = fileChooser.showOpenDialog(selectedFileButton.getScene().getWindow());
+        URI uri = file.toURI();
 
-        hBox.getChildren().add(button);
 
+        media = new Media(uri.toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
+        volumeSlider.valueProperty().bindBidirectional(mediaPlayer.volumeProperty());
+//
+    }
+
+    public void handlePlay(ActionEvent actionEvent) {
+        mediaView.getMediaPlayer().play();
+    }
+
+    public void handlePause(ActionEvent actionEvent) {
+        mediaView.getMediaPlayer().pause();
+    }
+
+    public void handleStop(ActionEvent actionEvent) {
+        mediaView.getMediaPlayer().stop();
     }
 }
